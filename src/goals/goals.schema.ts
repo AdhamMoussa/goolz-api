@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { Schema, Document } from 'mongoose';
 
 export const goalCategories = [
   'front end',
@@ -11,22 +11,30 @@ export const goalCategories = [
   'computer science',
 ] as const;
 
+export const resourceCategories = [
+  'online course/tutorial',
+  'book',
+  'article',
+  'side project',
+] as const;
+
 export interface IResource {
-  title: string;
-  url: string;
-  hoursPerDay: number;
-  weeklySchedule: Array<0 | 1 | 2 | 3 | 4 | 5 | 6>;
-  startDate: Date;
-  endDate: Date;
-  completed: boolean;
+  readonly title: string;
+  readonly url: string;
+  readonly category: typeof resourceCategories[number];
+  readonly hoursPerDay: number;
+  readonly weeklySchedule: Array<0 | 1 | 2 | 3 | 4 | 5 | 6>;
+  readonly startDate: Date;
+  readonly endDate: Date;
+  readonly completed: boolean;
 }
 
-export interface IGoal {
-  title: string;
-  category: typeof goalCategories[number];
-  startDate: Date;
-  endDate: Date;
-  learningResources: IResource[];
+export interface IGoal extends Document {
+  readonly title: string;
+  readonly category: typeof goalCategories[number];
+  readonly startDate: Date;
+  readonly endDate: Date;
+  readonly learningResources: IResource[];
 }
 
 const ResourceSchema = new Schema({
@@ -37,6 +45,10 @@ const ResourceSchema = new Schema({
   url: {
     type: String,
     required: [true, 'Resource URL is required'],
+  },
+  category: {
+    type: String,
+    required: [true, 'Resource category is required'],
   },
   hoursPerDay: {
     type: Number,
