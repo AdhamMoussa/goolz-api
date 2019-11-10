@@ -19,22 +19,22 @@ export const resourceCategories = [
 ] as const;
 
 export interface IResource {
-  readonly title: string;
-  readonly url: string;
-  readonly category: typeof resourceCategories[number];
-  readonly hoursPerDay: number;
-  readonly weeklySchedule: Array<0 | 1 | 2 | 3 | 4 | 5 | 6>;
-  readonly startDate: Date;
-  readonly endDate: Date;
-  readonly completed: boolean;
+  title: string;
+  url: string;
+  category: typeof resourceCategories[number];
+  hoursPerDay: number;
+  weeklySchedule: Array<0 | 1 | 2 | 3 | 4 | 5 | 6>;
+  startDate: Date;
+  endDate: Date;
+  completed?: boolean;
 }
 
-export interface IGoal extends Document {
-  readonly title: string;
-  readonly category: typeof goalCategories[number];
-  readonly startDate: Date;
-  readonly endDate: Date;
-  readonly learningResources: IResource[];
+export interface IGoal {
+  title: string;
+  category: typeof goalCategories[number];
+  startDate: Date;
+  endDate: Date;
+  learningResources: IResource[];
 }
 
 const ResourceSchema = new Schema({

@@ -3,6 +3,9 @@ import { Controller, Get, Post, Body } from '@nestjs/common';
 import { GoalsService } from './goals.service';
 import { IGoal } from './goals.schema';
 
+import { CreateGoalDTO } from './dto/createGoal.dto';
+import { GetMonthGoalsDTO } from './dto/getMonthGoals.dto';
+
 @Controller('goals')
 export class GoalsController {
   constructor(private readonly goalsService: GoalsService) {}
@@ -13,12 +16,12 @@ export class GoalsController {
   }
 
   @Get('by_month')
-  async getMonthGoals(@Body('date') date: string): Promise<IGoal[]> {
-    return await this.goalsService.getMonthGoals(date);
+  async getMonthGoals(@Body() body: GetMonthGoalsDTO): Promise<IGoal[]> {
+    return await this.goalsService.getMonthGoals(body.date);
   }
 
   @Post()
-  async createGoal(@Body() goal: IGoal): Promise<IGoal> {
-    return await this.goalsService.createGoal(goal);
+  async createGoal(@Body() goalDto: CreateGoalDTO): Promise<IGoal> {
+    return await this.goalsService.createGoal(goalDto);
   }
 }
